@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +8,325 @@
   <title>Coffee MS</title>
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+
+  <!-- Font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <style>
-    #headerImg {
-      margin: 0;
-      padding: 0;
-      background: url('https://cdn.pixabay.com/photo/2021/11/05/13/15/coffee-shop-6771371_1280.jpg') no-repeat local center;
+    body {
+      font-family: Arial, sans-serif;
     }
-    #headerImg::before {
-      display: block;
-      content: '';
+
+    .top-bar {
+      position: relative;
+    }
+    .top-bar img {
       width: 100%;
-      height: 150px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+    }
+    .top-bar .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 200px;
       background: rgba(0, 0, 0, 0.3);
+    }
+    .top-bar .caption {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      padding: 20px 25px;
+      font-size: 2rem;
+      border-radius: 10px;
+      user-select: none;
+      cursor: pointer;
+    }
+    .caption > *:first-child {
+      font-weight: bold;
+    }
+    .caption > *:last-child {
+      font-weight: normal;
+    }
+
+    .site-nav {
+      background-color: #333;
+      display: flex;
+      justify-content: space-around;
+    }
+    .site-nav a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    .site-nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    .site-footer {
+      background-color: #333;
+      text-align: center;
+      padding: 15px 10px;
+      color: white;
+    }
+
+    .menu {
+      margin: 20px;
+    }
+    .menu table {
+      border-collapse: collapse;
+      width: 80%;
+      margin: 0 auto 50px;
+    }
+    .menu table:first-child {
+      margin-top: 50px;
+    }
+    .menu table th {
+      background-color: #f2f2f2;
+    }
+    .menu table tr > * {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    .menu td:nth-child(1) {
+      width: 80%;
     }
   </style>
 </head>
+
 <body>
-  <main class="container-fluid">
-    <header class="row">
-      <figure id="headerImg" class="col-md-12">
-      </figure>
-    </header>
-    <nav class="row">
-      <div class="col-md-12">
-        Navbar goes here
-      </div>
-    </nav>
-    <div class="row">
-      <div class="col-md-12">
-        Content goes here
-      </div>
+  <div class="top-bar">
+    <img src="https://cdn.pixabay.com/photo/2021/11/05/13/15/coffee-shop-6771371_1280.jpg" />
+    <div class="overlay"></div>
+    <div class="caption" onclick="location.hash=''">
+      <h2>
+        <i class="fa-solid fa-mug-hot"></i>
+        CoffeeMS
+      </h2>
+      <h5>
+        Our coffee might be latte, <br />
+        but our puns are always on time.
+      </h5>
     </div>
-  </main>
+  </div>
+
+  <div class="site-nav">
+    <a href="#coffee">
+      Coffee</a>
+    <a href="#tea">
+      Tea</a>
+    <a href="#espresso">Espresso</a>
+    <a href="#smoothies">Smoothies</a>
+    <a href="#pastries">Pastries</a>
+    <a href="#milks">Milk Options</a>
+    <a href="#flavorings">Flavorings</a>
+    <a href="#icedDrinks">Iced Drinks</a>
+  </div>
+
+  <div class="menu">
+    <!-- Coffee Table -->
+    <table id="coffee">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-mug-saucer"></i>
+          Coffee
+        </th>
+      </tr>
+      <tr>
+        <td>Espresso</td>
+        <td>1.40 EUR</td>
+      </tr>
+      <tr>
+        <td>Cappuccino</td>
+        <td>1.97 EUR</td>
+      </tr>
+      <tr>
+        <td>Latte</td>
+        <td>1.77 EUR</td>
+      </tr>
+      <tr>
+        <td>Americano</td>
+        <td>1.59 EUR</td>
+      </tr>
+      <tr>
+        <td>Mocha</td>
+        <td>2.07 EUR</td>
+      </tr>
+      <tr>
+        <td>Macchiato</td>
+        <td>1.70 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Tea Table -->
+    <table id="tea">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-mug-hot"></i>
+          Tea
+        </th>
+      </tr>
+      <tr>
+        <td>Green Tea</td>
+        <td>1.18 EUR</td>
+      </tr>
+      <tr>
+        <td>Earl Grey</td>
+        <td>1.33 EUR</td>
+      </tr>
+      <tr>
+        <td>Chai Tea</td>
+        <td>1.48 EUR</td>
+      </tr>
+      <tr>
+        <td>Herbal Tea</td>
+        <td>1.12 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Espresso Table -->
+    <table id="espresso">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-whiskey-glass"></i>
+          Espresso
+        </th>
+      </tr>
+      <tr>
+        <td>Single Espresso</td>
+        <td>1.13 EUR</td>
+      </tr>
+      <tr>
+        <td>Double Espresso</td>
+        <td>1.43 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Smoothies Table -->
+    <table id="smoothies">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-blender"></i>
+          Smoothies
+        </th>
+      </tr>
+      <tr>
+        <td>Strawberry Banana Smoothie</td>
+        <td>1.68 EUR</td>
+      </tr>
+      <tr>
+        <td>Mango Tango Smoothie</td>
+        <td>1.59 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Pastries Table -->
+    <table id="pastries">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-bread-slice"></i>
+          Pastries
+        </th>
+      </tr>
+      <tr>
+        <td>Croissant</td>
+        <td>0.84 EUR</td>
+      </tr>
+      <tr>
+        <td>Muffin</td>
+        <td>1.03 EUR</td>
+      </tr>
+      <tr>
+        <td>Danish Pastry</td>
+        <td>1.20 EUR</td>
+      </tr>
+      <tr>
+        <td>Scone</td>
+        <td>0.99 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Milk Options Table -->
+    <table id="milks">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-cow"></i>
+          Milk Options
+        </th>
+      </tr>
+      <tr>
+        <td>Almond Milk</td>
+        <td>0.35 EUR</td>
+      </tr>
+      <tr>
+        <td>Soy Milk</td>
+        <td>0.42 EUR</td>
+      </tr>
+      <tr>
+        <td>Oat Milk</td>
+        <td>0.39 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Flavorings Table -->
+    <table id="flavorings">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-fill-drip"></i>
+          Flavorings
+        </th>
+      </tr>
+      <tr>
+        <td>Vanilla Syrup</td>
+        <td>0.25 EUR</td>
+      </tr>
+      <tr>
+        <td>Caramel Syrup</td>
+        <td>0.30 EUR</td>
+      </tr>
+      <tr>
+        <td>Hazelnut Syrup</td>
+        <td>0.32 EUR</td>
+      </tr>
+    </table>
+
+    <!-- Iced Drinks Table -->
+    <table id="icedDrinks">
+      <tr>
+        <th colspan="2">
+          <i class="fa-solid fa-snowflake"></i>
+          Iced Drinks
+        </th>
+      </tr>
+      <tr>
+        <td>Iced Coffee</td>
+        <td>1.63 EUR</td>
+      </tr>
+      <tr>
+        <td>Iced Tea</td>
+        <td>1.39 EUR</td>
+      </tr>
+    </table>
+  </div>
+
+  
+  <footer class="site-footer">
+    &copy; 2023 Coffee MS
+  </footer>
 </body>
+
 </html>
