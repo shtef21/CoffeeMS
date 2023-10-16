@@ -1,4 +1,5 @@
 # CoffeeMS
+
 Php app
 
 ## Init docker
@@ -20,9 +21,7 @@ docker run -dp 127.0.0.1:3000:3000 cms-img
 docker ps
 ```
 
-
 ## Zadaci
-
 
 ### Zadatak 1 - Init, routing
 
@@ -30,17 +29,15 @@ Naslovna stranica i routing na ostale (ostale ne moraju nužno biti napravljene)
 
 https://lms-2020.tvz.hr/mod/resource/view.php?id=5957
 
-
 ### Zadatak 2 - Baza podataka
 
 Izrada baze podataka na temelju definicije podataka.
 
-
 ### Zadatak 3 - Prijava i registracija
 
 ? Omogućiti automatsko generiranje usernamea i passworda?
-+ Kriptiranje lozinke
 
++ Kriptiranje lozinke
 
 ### Zadatak 4 - CMS sustav
 
@@ -48,3 +45,25 @@ CRUD korisnika - ADMIN
 CRUD pića - ADMIN, EDITOR
 API pretraživanje koktela - ADMIN, EDITOR
 
+
+## Upute
+
+Instalacija XAMPPa na linuxu
+
+```shell
+
+# Change permissions to the installer and run it
+chmod 755 xampp-linux-*-installer.run
+sudo ./xampp-linux-*-installer.run
+
+# Start / stop XAMPP
+sudo /opt/lampp/lampp start
+sudo /opt/lampp/lampp stop
+
+# Now open http://localhost
+
+# GUI tool
+cd /opt/lampp
+sudo ./manager-linux-run (or manager-linux-64.run)
+
+```
