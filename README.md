@@ -66,6 +66,7 @@ sudo /opt/lampp/lampp start
 sudo /opt/lampp/lampp stop
 
 # Now open http://localhost
+# This will use /var/www/html as server's root folder
 
 # GUI tool
 cd /opt/lampp
