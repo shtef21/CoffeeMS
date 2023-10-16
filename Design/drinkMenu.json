@@ -1,6 +1,8 @@
-var drinkMenu = [
+[
     {
         "category": "Coffee",
+        "icon": "fa-solid fa-mug-saucer",
+        "categoryId": "coffee",
         "items": [
             {
                 "name": "Espresso",
@@ -30,6 +32,8 @@ var drinkMenu = [
     },
     {
         "category": "Tea",
+        "icon": "fa-solid fa-mug-hot",
+        "categoryId": "tea",
         "items": [
             {
                 "name": "Green Tea",
@@ -51,6 +55,8 @@ var drinkMenu = [
     },
     {
         "category": "Espresso",
+        "icon": "fa-solid fa-whiskey-glass",
+        "categoryId": "espresso",
         "items": [
             {
                 "name": "Single Espresso",
@@ -64,6 +70,8 @@ var drinkMenu = [
     },
     {
         "category": "Smoothies",
+        "icon": "fa-solid fa-blender",
+        "categoryId": "smoothies",
         "items": [
             {
                 "name": "Strawberry Banana Smoothie",
@@ -77,6 +85,8 @@ var drinkMenu = [
     },
     {
         "category": "Pastries",
+        "icon": "fa-solid fa-bread-slice",
+        "categoryId": "pastries",
         "items": [
             {
                 "name": "Croissant",
@@ -97,7 +107,9 @@ var drinkMenu = [
         ]
     },
     {
-        "category": "Milk Options",
+        "category": "Milk",
+        "icon": "fa-solid fa-cow",
+        "categoryId": "milk",
         "items": [
             {
                 "name": "Almond Milk",
@@ -115,6 +127,8 @@ var drinkMenu = [
     },
     {
         "category": "Flavorings",
+        "icon": "fa-solid fa-fill-drip",
+        "categoryId": "flavorings",
         "items": [
             {
                 "name": "Vanilla Syrup",
@@ -132,6 +146,8 @@ var drinkMenu = [
     },
     {
         "category": "Iced Drinks",
+        "icon": "fa-solid fa-snowflake",
+        "categoryId": "icedDrinks",
         "items": [
             {
                 "name": "Iced Coffee",
