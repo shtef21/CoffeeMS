@@ -52,6 +52,11 @@ Instalacija XAMPPa na linuxu
 
 ```shell
 
+# Download the installer from https://www.apachefriends.org/download.html
+
+# If you haven't, install net-tools
+sudo apt install net-tools
+
 # Change permissions to the installer and run it
 chmod 755 xampp-linux-*-installer.run
 sudo ./xampp-linux-*-installer.run
