@@ -17,95 +17,8 @@
   <!-- Font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    .top-bar {
-      position: relative;
-    }
-    .top-bar img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      object-position: center;
-    }
-    .top-bar .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 200px;
-      background: rgba(0, 0, 0, 0.3);
-    }
-    .top-bar .caption {
-      display: inline-block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-      padding: 20px 25px;
-      font-size: 2rem;
-      border-radius: 10px;
-      user-select: none;
-      cursor: pointer;
-    }
-    .caption > *:first-child {
-      font-weight: bold;
-    }
-    .caption > *:last-child {
-      font-weight: normal;
-    }
-
-    .site-nav {
-      background-color: #333;
-      display: flex;
-      justify-content: space-around;
-    }
-    .site-nav a {
-      display: block;
-      color: white;
-      text-align: center;
-      padding: 14px 16px;
-      text-decoration: none;
-    }
-    .site-nav a:hover {
-      background-color: #ddd;
-      color: black;
-    }
-
-    .site-footer {
-      background-color: #333;
-      text-align: center;
-      padding: 15px 10px;
-      color: white;
-    }
-
-    .menu {
-      margin: 20px;
-    }
-    .menu table {
-      border-collapse: collapse;
-      width: 80%;
-      margin: 0 auto 50px;
-    }
-    .menu table:first-child {
-      margin-top: 50px;
-    }
-    .menu table th {
-      background-color: #f2f2f2;
-    }
-    .menu table tr > * {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    .menu td:nth-child(1) {
-      width: 80%;
-    }
-  </style>
+  <!-- Local styles -->
+  <link rel="stylesheet" href="./styles/styles.css">
 </head>
 
 <body>
@@ -137,7 +50,7 @@
     <a href="#icedDrinks">Iced Drinks</a>
   </div>
 
-  <div class="menu">
+  <div class="drink-menu">
     <!-- Coffee Table -->
     <table id="coffee">
       <tr>
@@ -327,6 +240,11 @@
   <footer class="site-footer">
     &copy; 2023 Coffee MS
   </footer>
-</body>
 
+  <script src="./drinkMenu.js"></script>
+  <script>
+    // TODO: use drinkMenu to generate MENUs
+  </script>
+
+</body>
 </html>
