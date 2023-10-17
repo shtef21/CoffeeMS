@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/src/images/favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="./src/images/favicon.ico" type="image/x-icon">
   <title>Coffee MS</title>
 
   <!-- Bootstrap -->
@@ -18,20 +18,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Local styles -->
-  <link rel="stylesheet" href="/src/styles/styles.css">
+  <link rel="stylesheet" href="./src/styles/main.css">
 </head>
 
 <body class="home">
 
   <div class="site-nav">
     <a href="/">Home</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    <a href="/logOut">Log out</a>
+    <a href="/login.html">Login</a>
+    <a href="/register.html">Register</a>
+    <a href="#" class="disabled">Log out</a>
   </div>
 
   <div class="top-bar">
-    <img src="/src/images/topbar-bg.jpg" />
+    <img src="./src/images/topbar-bg.jpg" />
     <div class="overlay"></div>
     <div class="caption">
       <h2>
@@ -51,7 +51,7 @@
   </div>
 
   <!-- Generated in JS -->
-  <div class="drink-menu">
+  <div class="main-content drink-menu">
   </div>
 
   
@@ -65,7 +65,7 @@
 
       let siteNav = document.querySelector('.drink-nav');
       let menuContainer = document.querySelector('.drink-menu');
-      let menus = await fetch('/src/data/drinkMenu.json')
+      let menus = await fetch('./src/data/drinkMenu.json')
         .then((res) => res.json());
       siteNav.innerHTML = '';
 
