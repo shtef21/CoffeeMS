@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="./src/styles/main.css">
 </head>
 
-<body class="home">
+<body class="about-us">
 
   <div class="site-nav">
     <a href="/">Home</a>
@@ -37,22 +37,24 @@
     <div class="caption">
       <h2>
         <i class="fa-solid fa-mug-hot"></i>
-        CoffeeMS
+        About us
       </h2>
       <h5>
-        Our coffee might be latte, <br />
-        but our puns are always on time.
+        I saw two coffee lovers arguing the other day. <br />
+        It was a very heated debate.
       </h5>
     </div>
   </div>
 
   <!-- Generated in JS -->
-  <div class="site-nav drink-nav">
+  <div class="site-nav blog-nav">
     <a>&nbsp;</a>
   </div>
 
   <!-- Generated in JS -->
-  <div class="main-content drink-menu">
+  <div class="main-content">
+    <div class="blog about-us-dest">
+    </div>
   </div>
 
   
@@ -61,49 +63,34 @@
   </footer>
 
   <script>
-    
-    async function generateMenus() {
 
-      let siteNav = document.querySelector('.drink-nav');
-      let menuContainer = document.querySelector('.drink-menu');
-      let menus = await fetch('./src/data/drinkMenu.json')
-        .then((res) => res.json());
-      siteNav.innerHTML = '';
+    function generateNav() {
 
-      for (let menu of menus) {
-
-        // Generate table
-        let table = document.createElement('table');
-        table.id = menu.categoryId;
-
-        let tableHead = ''
-          + '<tr><th colspan="2">'
-          + '<i class="' + menu.icon + '"></i> '
-          + menu.category
-          + '</th></tr>';
-        table.insertAdjacentHTML('beforeend', tableHead);
-
-        for (let item of menu.items) {
-          let priceRounded = item.price.toFixed(2);
-          let tableItem = ''
-            + '<tr><td>' + item.name + '</td>'
-            + '<td>' + priceRounded + ' EUR' + '</td></tr>';
-          table.insertAdjacentHTML('beforeend', tableItem);
-        }
-
-        menuContainer.insertAdjacentElement('beforeend', table);
-
-        // Generate navigation
-        let navButton = document.createElement('a');
-        navButton.innerText = menu.category;
-        navButton.href = '#' + menu.categoryId;
+      let blogNav = document.querySelector('.site-nav.blog-nav');
+      blogNav.innerHTML = '';
+      let titles = document.querySelectorAll('.main-content .blog > h1, .main-content .blog > h2');
+      
+      for (let i = 0; i < titles.length; ++i) {
+        let titleEl = titles[i];
+        titleEl.id = (titleEl.id || 'title') + '-' + i;
         
-        siteNav.appendChild(navButton);
+        let anchor = document.createElement('a');
+        anchor.innerText = titleEl.innerText;
+        anchor.href = '#' + titleEl.id;
+        blogNav.appendChild(anchor);
       }
     }
+    
+    async function fetchBlog() {
 
-    document.querySelector('.drink-menu').innerHTML = '';
-    generateMenus();
+      let blogContainer = document.querySelector('.about-us-dest');
+      let data = await fetch('./src/data/aboutUs.json')
+        .then((res) => res.json());
+      blogContainer.innerHTML = data.aboutUs || '<h2>Blog not found</h2>';
+
+      generateNav();
+    }
+    fetchBlog();
 
   </script>
 

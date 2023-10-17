@@ -51,7 +51,7 @@ body {
 }
 
 .site-nav {
-  background-color: $brown3;
+  background: linear-gradient($brown3, $brown4);
   display: flex;
   justify-content: flex-start;
   overflow-x: scroll;
@@ -72,7 +72,7 @@ body {
 }
 
 .site-footer {
-  background-color: hsl(25, 45, 25);
+  background: linear-gradient($brown3, $brown4);
   text-align: center;
   padding: 15px 10px;
   color: white;

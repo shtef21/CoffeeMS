@@ -23,19 +23,29 @@
 
 <body class="register">
 
-  <div class="site-nav">
-    <a href="/">Home</a>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-    <a href="/logOut">Log out</a>
-  </div>
-
   <div class="main-content">
+    <div class="form-container">
+
+      <form class="cms-form" action="/index.html">
+        <div class="input-section">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" placeholder="Your name..">
+        </div>
+
+        <div class="input-section mb30px">
+          <label for="password">Password</label>
+          <input type="text" id="password" name="password" placeholder="Write a strong password...">
+        </div>
+
+        <input type="submit" value="Create an account">
+
+        <div class="form-footer">
+          Already have an account?
+          <a href="/login.html">Login</a>
+        </div>
+      </form>
+    </div>
   </div>
-  
-  <footer class="site-footer">
-    &copy; 2023 Coffee MS
-  </footer>
 
 </body>
 </html>
