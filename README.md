@@ -81,7 +81,7 @@ sudo ./manager-linux-run (or manager-linux-64.run)
 <img src="images/home-page.png" alt="Home page" width="400"/>
 
 #### Login
-<img src="images/home-page.png" alt="images/login-page.png" width="400"/>
+<img src="images/login-page.png" alt="images/login-page.png" width="400"/>
 
 #### Register
 <img src="images/register-page.png" alt="Register page" width="400"/>
