@@ -78,13 +78,13 @@ sudo ./manager-linux-run (or manager-linux-64.run)
 ## Design
 
 #### Home page
-<img src="images/home-page.png" alt="Home page" width="400"/>
+<img src="git-images/home-page.png" alt="Home page" width="400"/>
 
 #### Login
-<img src="images/login-page.png" alt="images/login-page.png" width="400"/>
+<img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
 
 #### Register
-<img src="images/register-page.png" alt="Register page" width="400"/>
+<img src="git-images/register-page.png" alt="Register page" width="400"/>
 
 #### About us
-<img src="images/about-us-page.png" alt="About us" width="400"/>
+<img src="git-images/about-us-page.png" alt="About us" width="400"/>
