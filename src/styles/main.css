@@ -103,7 +103,7 @@ form.cms-form .input-section {
 form.cms-form .input-section label {
   margin-bottom: 8px;
 }
-form.cms-form input[type=text],
+form.cms-form input[type=text], form.cms-form input[type=password],
 form.cms-form select {
   width: 100%;
   padding: 12px 20px;

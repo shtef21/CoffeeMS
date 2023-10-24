@@ -6,13 +6,14 @@
     <title>Document</title>
     
     <?php
+      session_start();
       require('./phpCode/components/imports.html')
     ?>
 </head>
 <body class="home">
 
   <?php
-    include('./phpCode/components/top-nav.html');
+    include('./phpCode/components/top-nav.php');
     include('./phpCode/components/header.html');
   ?>
 
