@@ -1,7 +1,13 @@
 <?php
 
+  // Start session
   session_start();
 
+  // Initialize and setup some variables
+
+  if (!isset($_SESSION["role"])) {
+    $_SESSION["role"] = 0;
+  }
   $page =
     isset($_GET['p']) && $_GET['p'] != ''
     ? $_GET['p']
@@ -9,19 +15,21 @@
   $api_call = isset($_GET['api'])
     ? $_GET['api']
     : '';
-
-  // Define app endpoints
+  
+  $APP_FULL_URL = 'http://localhost/CoffeeMS/';
   $APP_ROOT = './app';
   $API_ROOT = '/CoffeeMS/app/src/data';
+
+  // Define app endpoints
   $ENDPOINTS = [
     // Pages
-    "home" => $APP_ROOT . "/home.php",
-    "login" => $APP_ROOT . "/login.php",
-    "log_out" => $APP_ROOT . "/logout.php",
-    "register" => $APP_ROOT . "/register.php",
-    "about_us" => $APP_ROOT . "/aboutUs.php",
-    "admin" => $APP_ROOT . "/admin.php",
-    "search_drink" => $APP_ROOT . "/searchDrink.php",
+    "home" => $APP_ROOT . "/views/home.php",
+    "login" => $APP_ROOT . "/views/login.php",
+    "logout" => $APP_ROOT . "/views/logout.php",
+    "register" => $APP_ROOT . "/views/register.php",
+    "about_us" => $APP_ROOT . "/views/aboutUs.php",
+    "admin" => $APP_ROOT . "/views/admin.php",
+    "search_drink" => $APP_ROOT . "/views/searchDrink.php",
     
     // Assets
     "main.css" => $APP_ROOT . "/src/styles/main.css",
@@ -31,26 +39,20 @@
     "drink_menu" => $API_ROOT . "/drinkMenu.json", // Change this when API endpoint is implemented
   ];
 
-  // Safe-checking
-  if (!isset($_SESSION["role"])) {
-    $_SESSION["role"] = 0;
-  }
-
-  echo '<h1>Session role: ' . $_SESSION["role"] . '</h1>';
-
+  // If this is an API call
   if ($api_call != '') {
     
-    // Spoji se na bazu
+    // Connect and setup DB
     require($APP_ROOT . '/api.php');
 
-    // Pozovi funkciju iz api.php koja će dohvaćati tablicu koju traži $api_call
+    // Make api call, for example:
     /*
-      - dohvati tablicu menija
-      - stvori novi item u meniju
-      - CRUD ostalih tablica
-      - itd.
+      - get a drink menu
+      - create a new drink
+      - other CRUD calls
     */
   }
+  // Else, return a page
   else {
     include($ENDPOINTS[$page]);
   }

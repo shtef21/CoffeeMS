@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee MS</title>
+    <title>Coffee MS - Home</title>
     
     <?php
       require($APP_ROOT . '/components/imports.php')
