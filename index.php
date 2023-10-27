@@ -1,81 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<?php
+
+  session_start();
+
+  $page =
+    isset($_GET['p']) && $_GET['p'] != ''
+    ? $_GET['p']
+    : 'home';
+  $api_call = isset($_GET['api'])
+    ? $_GET['api']
+    : '';
+
+  // Define app endpoints
+  $APP_ROOT = './app';
+  $API_ROOT = '/CoffeeMS/app/src/data';
+  $ENDPOINTS = [
+    // Pages
+    "home" => $APP_ROOT . "/home.php",
+    "login" => $APP_ROOT . "/login.php",
+    "log_out" => $APP_ROOT . "/logout.php",
+    "register" => $APP_ROOT . "/register.php",
+    "about_us" => $APP_ROOT . "/aboutUs.php",
+    "admin" => $APP_ROOT . "/admin.php",
+    "search_drink" => $APP_ROOT . "/searchDrink.php",
     
-    <?php
-      session_start();
-      require('./phpCode/components/imports.html')
-    ?>
-</head>
-<body class="home">
+    // Assets
+    "main.css" => $APP_ROOT . "/src/styles/main.css",
+    "topbar-bg.jpg" => $APP_ROOT . "/src/images/topbar-bg.jpg",
 
-  <?php
-    include('./phpCode/components/top-nav.php');
-    include('./phpCode/components/header.html');
-  ?>
+    // API
+    "drink_menu" => $API_ROOT . "/drinkMenu.json", // Change this when API endpoint is implemented
+  ];
 
-  <!-- Generated in JS -->
-  <div class="site-nav drink-nav">
-    <a>&nbsp;</a>
-  </div>
+  // Safe-checking
+  if (!isset($_SESSION["role"])) {
+    $_SESSION["role"] = 0;
+  }
 
-  <!-- Generated in JS -->
-  <div class="main-content drink-menu">
-  </div>
-  
-  <?php
-    include('./phpCode/components/footer.html')
-  ?>
+  echo '<h1>Session role: ' . $_SESSION["role"] . '</h1>';
 
-  <script>
+  if ($api_call != '') {
     
-    async function generateMenus() {
+    // Spoji se na bazu
+    require($APP_ROOT . '/api.php');
 
-      let siteNav = document.querySelector('.drink-nav');
-      let menuContainer = document.querySelector('.drink-menu');
-      let menus = await fetch('./src/data/drinkMenu.json')
-        .then((res) => res.json());
-      siteNav.innerHTML = '';
-
-      for (let menu of menus) {
-
-        // Generate table
-        let table = document.createElement('table');
-        table.id = menu.categoryId;
-
-        let tableHead = ''
-          + '<tr><th colspan="2">'
-          + '<i class="' + menu.icon + '"></i> '
-          + menu.category
-          + '</th></tr>';
-        table.insertAdjacentHTML('beforeend', tableHead);
-
-        for (let item of menu.items) {
-          let priceRounded = item.price.toFixed(2);
-          let tableItem = ''
-            + '<tr><td>' + item.name + '</td>'
-            + '<td>' + priceRounded + ' EUR' + '</td></tr>';
-          table.insertAdjacentHTML('beforeend', tableItem);
-        }
-
-        menuContainer.insertAdjacentElement('beforeend', table);
-
-        // Generate navigation
-        let navButton = document.createElement('a');
-        navButton.innerText = menu.category;
-        navButton.href = '#' + menu.categoryId;
-        
-        siteNav.appendChild(navButton);
-      }
-    }
-
-    document.querySelector('.drink-menu').innerHTML = '';
-    generateMenus();
-
-  </script>
-
-</body>
-</html>
+    // Pozovi funkciju iz api.php koja će dohvaćati tablicu koju traži $api_call
+    /*
+      - dohvati tablicu menija
+      - stvori novi item u meniju
+      - CRUD ostalih tablica
+      - itd.
+    */
+  }
+  else {
+    include($ENDPOINTS[$page]);
+  }
+?>

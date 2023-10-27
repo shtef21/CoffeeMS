@@ -1,6 +1,6 @@
 <div class="site-nav">
-    <a href="<?php echo $ENDPOINTS['home'] ?>">Home</a>
-    <a href="<?php echo $ENDPOINTS['login'] ?>">Login</a>
+    <a href="?p=home">Home</a>
+    <a href="?p=login">Login</a>
     <a href="<?php echo $ENDPOINTS['register'] ?>">Register</a>
     <a href="<?php echo $ENDPOINTS['about_us'] ?>">About us</a>
 

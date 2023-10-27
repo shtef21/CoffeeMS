@@ -7,14 +7,14 @@
     
     <?php
       session_start();
-      require($APP_ROOT . '/phpCode/components/imports.php')
+      require('./phpCode/components/imports.html')
     ?>
 </head>
 <body class="home">
 
   <?php
-    include($APP_ROOT . '/phpCode/components/top-nav.php');
-    include($APP_ROOT . '/phpCode/components/header.php');
+    include('./phpCode/components/top-nav.php');
+    include('./phpCode/components/header.html');
   ?>
 
   <!-- Generated in JS -->
@@ -27,7 +27,7 @@
   </div>
   
   <?php
-    include($APP_ROOT . '/phpCode/components/footer.php')
+    include('./phpCode/components/footer.html')
   ?>
 
   <script>
@@ -36,7 +36,7 @@
 
       let siteNav = document.querySelector('.drink-nav');
       let menuContainer = document.querySelector('.drink-menu');
-      let menus = await fetch(ENDPOINTS['drink_menu'])
+      let menus = await fetch('./src/data/drinkMenu.json')
         .then((res) => res.json());
       siteNav.innerHTML = '';
 
