@@ -8,6 +8,11 @@ session_start();
 if (!isset($_SESSION["role"])) {
     $_SESSION["role"] = 0;
 }
+if (!isset($_SESSION["username"])) {
+    $_SESSION["username"] = null;
+}
+$_SESSION["logged_in"] = $_SESSION["username"] != null;
+
 $page =
     isset($_GET['p']) && $_GET['p'] != ''
     ? $_GET['p']
@@ -40,6 +45,9 @@ $ENDPOINTS = [
     // Change this when API endpoint is implemented
 
 ];
+
+// Include common functions for app
+include($APP_ROOT . "/components/functions.php");
 
 // If this is an API call
 if ($api_call != '') {

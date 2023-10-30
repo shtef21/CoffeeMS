@@ -36,8 +36,6 @@
     $password = '';
     $dbname = 'coffeems';
 
-    echo "session " . $_SESSION['username'] . " " . $_SESSION['role'];
-
     // Create a database connection
     $mysqli = new mysqli($server_name, $username, $password, $dbname);
 
@@ -110,7 +108,7 @@
 
             let categories = <?php echo json_encode($categories); ?>;
             let items = <?php echo json_encode($items); ?>;
-            let user_role = <?php echo json_encode($_SESSION['role']) ?>
+            let user_role = <?php echo json_encode($_SESSION['role']) ?>;
 
             let siteNav = document.querySelector('.drink-nav');
             let menuContainer = document.querySelector('.drink-menu');
@@ -126,7 +124,8 @@
                 table.id = category.category_id;
 
                 let tableHead = ''
-                    + '<tr><th colspan="2">'
+                    + '<tr><th colspan="'
+                    + (user_role > 1 ? 3 : 2) + '">'
                     + '<i class="' + category.category_icon + '"></i> '
                     + category.category_name
                     + '</th></tr>';

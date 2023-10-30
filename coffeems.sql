@@ -113,10 +113,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+/*
+  USERS (BCRYPT used for password hashing):
+    username=admin, password=admin
+    username=user,  password=user
+*/
 INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `role`) VALUES
-(1, 'admin@example.com', 'admin_user', 'admin_password', 2),
-(2, 'user1@example.com', 'regular_user1', 'password1', 1),
-(3, 'user2@example.com', 'regular_user2', 'password2', 1);
+(1, 'admin@example.com', 'admin', '$2y$10$R6PYLuS3mFOjG.2j3ab0zOW5x.iyP6JTXIw0FUtNdUDgVFVhaEBai', 2),
+(2, 'user@example.com', 'user', '$2y$10$4zXi07aND5SlsDiyMtbgqeD8A/RAAcMGld7VFfzFpW4X5RBZAazd2', 1),
 
 --
 -- Indexes for dumped tables

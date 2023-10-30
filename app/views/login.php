@@ -9,7 +9,7 @@
 
     <?php
     require($APP_ROOT . '/components/imports.php')
-        ?>
+    ?>
 </head>
 
 <?php
@@ -19,9 +19,13 @@ $server_name = 'localhost';
 $username = 'root';
 $password = '';
 $dbname = 'coffeems';
+$error_message = null;
 
 if (isset($_POST['username']) && !empty($_POST['password'])) {
+
+    session_abort();
     session_start();
+
     // User input
     $requested_username = $_POST['username'];
     $requested_password = $_POST['password'];
@@ -29,20 +33,15 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
     // Create a database connection
     $mysqli = new mysqli($server_name, $username, $password, $dbname);
 
-    // Check the connection
-    if ($mysqli->connect_error) {
-        die("Connection failed: " . $mysqli->connect_error);
-    }
-
     // Query to fetch data using a prepared statement
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+    $sql = "SELECT * FROM users WHERE username = ?";
 
     // Prepare the statement
     $stmt = $mysqli->prepare($sql);
 
     if ($stmt) {
-        // Bind parameters and execute the statement
-        $stmt->bind_param("ss", $requested_username, $requested_password);
+        // Bind parameters
+        $stmt->bind_param("s", $requested_username);
 
         // Execute the query
         $stmt->execute();
@@ -50,28 +49,42 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
         // Get the result
         $result = $stmt->get_result();
 
+        // If query executed
         if ($result) {
             $data = array();
 
-            // Fetch data and store it in an array
+            // Iterate rows
             while ($row = $result->fetch_assoc()) {
+                // Add row to data
                 $data[] = $row;
             }
 
-            $_SESSION['username'] = $data[0]['username'];
-            $_SESSION['role'] = $data[0]['role'];
-            echo "Session variables are set.";
-            echo "session " . $_SESSION['username'] . " " . $_SESSION['role'];
+            // If array is not empty, check the password
+            if (!empty($data)) {
+                // Verify the hashed password
+                $stored_password = $data[0]['password'];
 
+                if (password_verify($requested_password, $stored_password)) {
+                    // Password is correct; set session data
+                    $_SESSION['username'] = $data[0]['username'];
+                    $_SESSION['role'] = $data[0]['role'];
+                    echo "Session variables are set.";
+                    echo "session " . $_SESSION['username'] . " " . $_SESSION['role'];
+
+                    // Redirect to home
+                    redirect_home();
+                } else {
+                    $error_message = "Incorrect password.";
+                }
+            } else {
+                $error_message = "No results found.";
+            }
 
             // Close the prepared statement and the database connection
             $stmt->close();
             $mysqli->close();
-
-            // Return data as JSON
-            //echo json_encode($data);
         } else {
-            echo "No results found.";
+            echo "Error: " . $mysqli->error;
         }
     } else {
         echo "Error: " . $mysqli->error;
@@ -84,7 +97,7 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
     <div class="main-content">
         <div class="form-container">
 
-            <form class="cms-form" action="<?php $ENDPOINTS['home'] ?>" method="post">
+            <form class="cms-form" action="?p=login" method="post">
                 <div class="input-section">
                     <label for="username">Username</label>
                     <input type="text" name="username" placeholder="Your username...">
@@ -95,11 +108,20 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
                     <input type="password" name="password" placeholder="Your password...">
                 </div>
 
+                <?php
+                if ($error_message != null) {
+                    echo ''
+                        . '<div style="margin-bottom: 10px; color: red;">'
+                        . $error_message
+                        . '</div>';
+                }
+                ?>
+
                 <input type="submit" value="Log in">
 
                 <div class="form-footer">
                     Don't have an account?
-                    <a href="/register.html">Register</a>
+                    <a href="?p=register">Register</a>
                 </div>
             </form>
         </div>

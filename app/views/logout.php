@@ -1,9 +1,15 @@
 <?php
-      // Clear session
-      echo $_SESSION["role"];
-      session_abort();
 
-      // Redirect to homepage
-      header('Location: ' . $APP_FULL_URL, true, 301);  
-      exit();
-?>
+log_out();
+
+function log_out()
+{
+  session_start();
+  setcookie(session_name(), '', 100);
+  session_unset();
+  session_destroy();
+  $_SESSION = array();
+}
+
+// Redirect to homepage
+redirect_home();

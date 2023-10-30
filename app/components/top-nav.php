@@ -13,7 +13,7 @@
     ) {
         echo '<a href="?p=search_drink">Find a cocktail</a>';
     }
-    if($_SESSION["role"] >= 1) {
+    if($_SESSION["logged_in"]) {
         echo '<a href="?p=logout" class="disabled">Log out</a>';
     }
     ?>
