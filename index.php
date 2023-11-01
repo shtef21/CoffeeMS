@@ -5,6 +5,11 @@ session_start();
 
 // Initialize and setup some variables
 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 if (!isset($_SESSION["role"])) {
     $_SESSION["role"] = 0;
 }
