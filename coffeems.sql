@@ -120,7 +120,7 @@ CREATE TABLE `users` (
 */
 INSERT INTO `users` (`user_id`, `email`, `username`, `password`, `role`) VALUES
 (1, 'admin@example.com', 'admin', '$2y$10$R6PYLuS3mFOjG.2j3ab0zOW5x.iyP6JTXIw0FUtNdUDgVFVhaEBai', 2),
-(2, 'user@example.com', 'user', '$2y$10$4zXi07aND5SlsDiyMtbgqeD8A/RAAcMGld7VFfzFpW4X5RBZAazd2', 1),
+(2, 'user@example.com', 'user', '$2y$10$4zXi07aND5SlsDiyMtbgqeD8A/RAAcMGld7VFfzFpW4X5RBZAazd2', 1);
 
 --
 -- Indexes for dumped tables
