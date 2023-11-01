@@ -4,64 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <style>
-    #cocktailPage {
-      margin: 50px auto;
-      width: 100%;
-      max-width: 1200px;
-    }
-    #output {
-      width: 100%;
-      min-height: 250px;
-      resize: vertical;
-    }
-    #searchContainer {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-    #input {
-      width: 75%;
-    }
-    #submit {
-      width: 20%;
-    }
-
-    #cocktailContainer {
-      padding: 15px 10px;
-    }
-    #cocktailContainer > div {
-      padding: 10px;
-    }
-    #cocktailContainer .cocktail-card {
-      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    }
-  </style>
     
   <?php
     require($APP_ROOT . '/components/imports.php')
   ?>
 </head>
-<body>
+<body class="search-cocktail">
 
   <?php
     include($APP_ROOT . '/components/top-nav.php');
     include($APP_ROOT . '/components/header.php');
   ?>
   
-  <main id="cocktailPage" class="container">
+  <main id="cocktailPage" class="container main-content">
     <div class="row">
-      <p>
-        Be easy on us, this page is still WIP!
-      </p>
-      <div id="searchContainer">
-        <input id="input" value="" placeholder="Start typing..." />
-        <input id="submit" type="submit" value="Search" />
+      <div id="searchContainer" class="col-12">
+        <div class="search-wrapper">
+          <div class="input-wrapper">
+            <input id="input" value="" placeholder="Search cocktails..." />
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+        </div>
       </div>
-      <textarea id="output" readonly></textarea>
     </div>
 
-    <div id="cocktailContainer" class="row">
+    <div id="cocktailContainer" class="row isFetching">
     </div>
   </main>
   
@@ -70,32 +37,53 @@
   ?>
 
   <template id="t_cocktail">
-    <div class="col-6 col-md-3 col-lg-2">
+    <div class="col-12 col-md-6 col-lg-4">
       <div class="cocktail-card">
-        ${ data.name }
+        <img src="${ data.thumbnail }" />
+        <div class="card-body">
+          <h5 class="title">
+            ${ data.name }
+          </h5>
+          <div>
+            Glass type: <strong> ${ data.glassType } </strong>
+            <br />
+            ${ (data.ingredientsHtml ? 'Ingredients:' : '') }
+            ${ (data.ingredientsHtml || '') }
+          </div>
+          <div>
+            <u> Preparation: </u> <br />
+            ${ data.instructions }
+          </div>
+        </div>
       </div>
     </div>
   </template>
   
   <script>
 
+    // Simple templating
     const generateHtml = (html, data={}) => eval('`' + html + '`');
 
     function generateCocktails(drinks) {
       cocktailContainer.innerHTML = '';
 
       for (let i = 0; i < drinks.length; ++i) {
-        const cocktailHtml = generateHtml(
-          t_cocktail.innerHTML,
-          { name: 'martini' },
-        );
+        if (drinks[i]?.ingredients && drinks[i].ingredients.length > 0) {
+          drinks[i].ingredientsHtml = '<ul>';
+          drinks[i].ingredientsHtml += drinks[i].ingredients.map(ingr => (
+            '<li>'
+            + '<strong>' + ingr.name + '</strong>'
+            + (ingr.amount ? ', ' + ingr.amount : '')
+            + '</li>'
+          )).join('');
+          drinks[i].ingredientsHtml += '</ul>';
+        }
+        const cocktailHtml = generateHtml(t_cocktail.innerHTML, drinks[i]);
         cocktailContainer.insertAdjacentHTML('beforeend', cocktailHtml);
       }
     }
 
     async function initCocktailSearch(cocktailName) {
-
-      // output.value = 'Sending request...';
 
       const nameEncoded = encodeURIComponent(cocktailName);
       const drinksUrl = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nameEncoded}`;
@@ -126,42 +114,32 @@
         }
       });
 
-      let prettyOutput = {
-        input: cocktailName,
-        items_fetched: drinks.length,
-        drink_names: drinks.map(d => d.name),
-        data: drinks,
-      };
-      output.value = JSON.stringify(prettyOutput, null, 2);
-
       generateCocktails(drinks);
+      cocktailContainer.classList.remove('isFetching');
     }
 
     function setup_page() {
 
       // Turn on hotReload
       hotReload();
-      
-      // Setup search button
-      submit.onclick = () => initCocktailSearch(input.value);
 
       // Setup delayed search
       let delayed_tid = null;
       let prev_search = '';
       input.onkeyup = function() {
-        output.value = 'Typing...';
         clearTimeout(delayed_tid);
+        cocktailContainer.classList.add('isFetching');
 
         delayed_tid = setTimeout(() => {
           if (input.value !== prev_search) {
             prev_search = input.value;
-            submit.click();
+            initCocktailSearch(input.value);
           }
         }, 1500);
       }
 
-      // Initial search
-      submit.click();
+      // Search initially
+      initCocktailSearch(input.value);
     }
 
     setup_page();
