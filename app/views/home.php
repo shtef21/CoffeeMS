@@ -13,6 +13,21 @@
 
 <body class="home">
 
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="?p=home" method="POST">
+                <input type="text" name="new_item_name" placeholder="Insert item name">
+                <input type="number" name="new_item_price" placeholder="Insert item price">
+                <input type="button" value="Add">
+            </form>
+        </div>
+
+    </div>
+
     <?php
     include($APP_ROOT . '/components/top-nav.php');
     include($APP_ROOT . '/components/header.php');
@@ -127,8 +142,11 @@
                     + '<tr><th colspan="'
                     + (user_role > 1 ? 3 : 2) + '">'
                     + '<i class="' + category.category_icon + '"></i> '
-                    + category.category_name
-                    + '</th></tr>';
+                    + category.category_name;
+                if (user_role > 1) {
+                    tableHead += '<button class="btn bg-brown1" style="border:1px solid black; float: right; padding:5 10px;" onClick="openModal(' + category.category_id + ')"> + </button>'
+                }
+                tableHead += '</th></tr>';
                 table.insertAdjacentHTML('beforeend', tableHead);
 
                 for (let item of items) {
@@ -181,6 +199,35 @@
             });
             //location.reload();
 
+        }
+
+
+        function openModal(category_id) {
+
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
         }
 
     </script>
