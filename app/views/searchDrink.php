@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    #cocktail-container {
+    #cocktailPage {
       margin: 50px auto;
       width: 100%;
       max-width: 1200px;
@@ -26,6 +26,16 @@
     #submit {
       width: 20%;
     }
+
+    #cocktailContainer {
+      padding: 15px 10px;
+    }
+    #cocktailContainer > div {
+      padding: 10px;
+    }
+    #cocktailContainer .cocktail-card {
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    }
   </style>
     
   <?php
@@ -39,24 +49,51 @@
     include($APP_ROOT . '/components/header.php');
   ?>
   
-  <main id="cocktail-container">
-    <p>
-      Be easy on us, this page is still WIP!
-    </p>
-    <div id="searchContainer">
-      <input id="input" value="" placeholder="Start typing..." />
-      <input id="submit" type="submit" value="Search" />
+  <main id="cocktailPage" class="container">
+    <div class="row">
+      <p>
+        Be easy on us, this page is still WIP!
+      </p>
+      <div id="searchContainer">
+        <input id="input" value="" placeholder="Start typing..." />
+        <input id="submit" type="submit" value="Search" />
+      </div>
+      <textarea id="output" readonly></textarea>
     </div>
-    <textarea id="output" readonly></textarea>
+
+    <div id="cocktailContainer" class="row">
+    </div>
   </main>
   
   <?php
     include($APP_ROOT . '/components/footer.php')
   ?>
+
+  <template id="t_cocktail">
+    <div class="col-6 col-md-3 col-lg-2">
+      <div class="cocktail-card">
+        ${ data.name }
+      </div>
+    </div>
+  </template>
   
   <script>
 
-    async function testApi(cocktailName) {
+    const generateHtml = (html, data={}) => eval('`' + html + '`');
+
+    function generateCocktails(drinks) {
+      cocktailContainer.innerHTML = '';
+
+      for (let i = 0; i < drinks.length; ++i) {
+        const cocktailHtml = generateHtml(
+          t_cocktail.innerHTML,
+          { name: 'martini' },
+        );
+        cocktailContainer.insertAdjacentHTML('beforeend', cocktailHtml);
+      }
+    }
+
+    async function initCocktailSearch(cocktailName) {
 
       // output.value = 'Sending request...';
 
@@ -96,12 +133,17 @@
         data: drinks,
       };
       output.value = JSON.stringify(prettyOutput, null, 2);
+
+      generateCocktails(drinks);
     }
 
     function setup_page() {
+
+      // Turn on hotReload
+      hotReload();
       
-      submit.onclick = () => testApi(input.value);
-      submit.click();
+      // Setup search button
+      submit.onclick = () => initCocktailSearch(input.value);
 
       // Setup delayed search
       let delayed_tid = null;
@@ -117,6 +159,9 @@
           }
         }, 1500);
       }
+
+      // Initial search
+      submit.click();
     }
 
     setup_page();

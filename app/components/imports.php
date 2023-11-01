@@ -18,4 +18,24 @@ crossorigin="anonymous"></script>
     var ENDPOINTS = {
         "drink_menu": "<?php echo $ENDPOINTS['drink_menu'] ?>"
     };
+
+    // Turn on hot reload
+    function hotReload() {
+
+        let prevHtml = null;
+        let iid = null;
+
+        iid = setInterval(async () => {
+            let currHtml = await fetch(window.location.href)
+                .then(res => res.text());
+            if (!prevHtml) {
+                prevHtml = currHtml;
+            }
+            else if (prevHtml !== currHtml) {
+                clearInterval(iid);
+                console.log('%c hotReload: Change detected. Reloading in 1s...', 'color: red;');
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        }, 1000);
+    }
 </script>
