@@ -9,7 +9,7 @@
 
     <?php
     require($APP_ROOT . '/components/imports.php')
-    ?>
+        ?>
 </head>
 <?php
 
@@ -50,7 +50,7 @@ if (isset($_POST['username']) && !empty($_POST['password']) && isset($_POST['ema
             $error_message = 'Username already exists!';
         } else {
             // Query to insert a new user
-            $sql = "INSERT INTO users(email, username, password) VALUES(?, ?, ?);";
+            $sql = "INSERT INTO users(email, username, password, role) VALUES(?, ?, ?, 1);";
 
             // Prepare the statement
             $stmt2 = $mysqli->prepare($sql);
@@ -87,24 +87,20 @@ if (isset($_POST['username']) && !empty($_POST['password']) && isset($_POST['ema
             <form class="cms-form" action="?p=register" method="POST">
                 <div class="input-section">
                     <label for="name">Email</label>
-                    <input type="text" name="email" placeholder="Your email.."
-                        <?php
-                            if (isset($_POST['email'])) {
-                                echo 'value="' . $_POST['email'] . '"';
-                            }
-                            ?>
-                    />
+                    <input type="text" name="email" placeholder="Your email.." <?php
+                    if (isset($_POST['email'])) {
+                        echo 'value="' . $_POST['email'] . '"';
+                    }
+                    ?> />
                 </div>
 
                 <div class="input-section">
                     <label for="name">Username</label>
-                    <input type="text" name="username" placeholder="Your name.."
-                        <?php
-                        if (isset($_POST['username'])) {
-                            echo 'value="' . $_POST['username'] . '"';
-                        }
-                        ?>
-                    />
+                    <input type="text" name="username" placeholder="Your name.." <?php
+                    if (isset($_POST['username'])) {
+                        echo 'value="' . $_POST['username'] . '"';
+                    }
+                    ?> />
                 </div>
 
                 <div class="input-section mb30px">
@@ -140,9 +136,9 @@ if (isset($_POST['username']) && !empty($_POST['password']) && isset($_POST['ema
 
     <script>
         <?php
-            if ($successful_login) {
-                echo "document.getElementById('redirect-form').submit()";
-            }
+        if ($successful_login) {
+            echo "document.getElementById('redirect-form').submit()";
+        }
         ?>
     </script>
 </body>
