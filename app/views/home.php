@@ -16,14 +16,16 @@
     <!-- The Modal -->
     <div id="myModal" class="modal">
 
+        <div class="modal-header">
+            <span class="close">&times;</span>
+        </div>
         <!-- Modal content -->
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <form action="?p=home" method="POST">
-                <input type="text" name="new_item_name" placeholder="Insert item name">
-                <input type="number" name="new_item_price" placeholder="Insert item price">
-                <input type="button" value="Add">
-            </form>
+
+            <input type="text" id="new_item_name" placeholder="Insert item name">
+            <input type="number" id="new_item_price" placeholder="Insert item price">
+            <input type="button" id="add_item_button" value="Add" onClick="add_item();">
+
         </div>
 
     </div>
@@ -44,6 +46,10 @@
 
     <?php
     include($APP_ROOT . '/components/footer.php');
+
+    if (isset($_POST["functionName"])) {
+        echo "IMA GA " . $_POST["functionName"];
+    }
 
     // Database configuration
     $server_name = 'localhost';
@@ -131,7 +137,6 @@
             //     .then((res) => res.json());
             siteNav.innerHTML = '';
 
-            debugger;
             for (let category of categories) {
 
                 // Generate table
@@ -182,23 +187,51 @@
 
             console.log(item_id);
 
-            let url = 'index.php'
+            let url = "./app/components/item_controller.php?id=" + item_id + "&function_name=delete_item";
 
             await fetch(url, {
-                method: "POST", // *GET, POST, PUT, DELETE, etc.
-                mode: "cors", // no-cors, *cors, same-origin
-                cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                credentials: "same-origin", // include, *same-origin, omit
+                method: "GET",
                 headers: {
-                    "Content-Type": "application/json",
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                redirect: "follow", // manual, *follow, error
-                referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-                body: JSON.stringify({ functionName: 'delete_item', id: item_id }) // body data type must match "Content-Type" header
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
             });
-            //location.reload();
 
+            // await fetch(url, {
+            //     method: "POST", // *GET, POST, PUT, DELETE, etc.
+            //     mode: "cors", // no-cors, *cors, same-origin
+            //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            //     credentials: "same-origin", // include, *same-origin, omit
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //         // 'Content-Type': 'application/x-www-form-urlencoded',
+            //     },
+            //     redirect: "follow", // manual, *follow, error
+            //     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+            //     body: { function_name: 'delete_item', id: "item_id" } // body data type must match "Content-Type" header
+            // });
+            location.reload();
+
+        }
+
+        async function add_item() {
+
+            let category_id = document.getElementById("add_item_button").dataset.category_id;
+            let item_name = document.getElementById("new_item_name").value;
+            let item_price = document.getElementById("new_item_price").value;
+
+            let url = "./app/components/item_controller.php?category_id=" + category_id
+                + "&item_name=" + item_name
+                + "&item_price=" + item_price
+                + "&function_name=add_item";
+
+            await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            });
+
+            location.reload();
         }
 
 
@@ -206,16 +239,13 @@
 
             var modal = document.getElementById("myModal");
 
-            // Get the button that opens the modal
-            var btn = document.getElementById("myBtn");
-
             // Get the <span> element that closes the modal
             var span = document.getElementsByClassName("close")[0];
 
-            // When the user clicks on the button, open the modal
-            btn.onclick = function () {
-                modal.style.display = "block";
-            }
+            let btn = document.getElementById("add_item_button");
+            btn.dataset.category_id = category_id;
+
+            modal.style.display = "block";
 
             // When the user clicks on <span> (x), close the modal
             span.onclick = function () {
@@ -233,5 +263,7 @@
     </script>
 
 </body>
+
+
 
 </html>

@@ -60,6 +60,17 @@
         /* Could be more or less, depending on screen size */
     }
 
+    .modal-content>input:text {
+        width: 100%;
+    }
+
+    .modal-header {
+        background-color: $brown4;
+        display: block;
+        align-items: flex-end;
+        height: 30px;
+    }
+
     /* The Close Button */
     .close {
         color: #aaa;
