@@ -1,23 +1,27 @@
-# Use Ubuntu 22.04 as the base image
+# Use the official Ubuntu 22.04 base image
 FROM ubuntu:22.04
 
-# Set non-interactive mode during package installation
+# Set environment variables to avoid interactive prompts during installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Run linux_setup.sh
-COPY setup_linux.sh /opt/setup_linux.sh
-RUN chmod +x /opt/setup_linux.sh
-RUN /opt/setup_linux.sh
+# Update the package list and install necessary packages
+RUN apt-get update -y && apt-get install -y \
+    apache2 \
+    php \
+    php-mysql \
+    php-gd \
+    php-curl \
+    mysql-server
 
-# Expose port 5000
-EXPOSE 5000
+# Copy your project files into the /var/www/html directory
+COPY . /var/www/html
+RUN rm /var/www/html/index.html
 
-# Start XAMPP
-CMD /opt/lampp/lampp start
+# Expose port 80 for Apache
+EXPOSE 80
 
-# Initialize MySQL by running coffeems.sql
-COPY coffeems.sql /opt/coffeems.sql
-RUN /opt/lampp/bin/mysql -u root < /opt/coffeems.sql
+# The server should be available when you open:
+#   https://localhost
 
-# Define a healthcheck to ensure the container is healthy (optional)
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD curl -f http://localhost:5000 || exit 1
+# Start Apache and MySQL services
+CMD service apache2 start && service mysql start && tail -f /var/log/apache2/access.log
