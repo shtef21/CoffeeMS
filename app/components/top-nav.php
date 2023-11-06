@@ -16,6 +16,6 @@
     }
     ?>
 
-    <a href="?p=testApi">Test</a>
+    <a href="?p=testApi">Test out the API</a>
 
 </div>
