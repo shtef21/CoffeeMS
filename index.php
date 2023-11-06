@@ -82,6 +82,7 @@ $ENDPOINTS = [
     "about_us" => $APP_ROOT . "/views/aboutUs.php",
     "admin" => $APP_ROOT . "/views/admin.php",
     "search_drink" => $APP_ROOT . "/views/searchDrink.php",
+    "testApi" => $APP_ROOT . "/views/testApi.php",
 
     // Assets
     "main.css" => $APP_ROOT . "/src/styles/main.css",
