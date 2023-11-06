@@ -24,7 +24,7 @@
 
             <input type="text" id="new_item_name" placeholder="Insert item name">
             <input type="number" id="new_item_price" placeholder="Insert item price">
-            <input type="button" id="add_item_button" value="Add" onClick="add_item();">
+            <input type="button" id="add_item_button" value="Add" onClick="add_edit();">
 
         </div>
 
@@ -86,11 +86,6 @@
             while ($row = $result->fetch_assoc()) {
                 $items[] = $row;
             }
-
-            // Close the prepared statement and the database connection
-    
-            // Return data as JSON
-            //echo json_encode($items);
         } else {
             echo "No results found.";
         }
@@ -133,8 +128,7 @@
 
             let siteNav = document.querySelector('.drink-nav');
             let menuContainer = document.querySelector('.drink-menu');
-            // let menus = await fetch(ENDPOINTS['drink_menu'])
-            //     .then((res) => res.json());
+
             siteNav.innerHTML = '';
 
             for (let category of categories) {
@@ -145,11 +139,11 @@
 
                 let tableHead = ''
                     + '<tr><th colspan="'
-                    + (user_role > 1 ? 3 : 2) + '">'
+                    + (user_role > 1 ? 4 : 2) + '">'
                     + '<i class="' + category.category_icon + '"></i> '
                     + category.category_name;
                 if (user_role > 1) {
-                    tableHead += '<button class="btn bg-brown1" style="border:1px solid black; float: right; padding:5 10px;" onClick="openModal(' + category.category_id + ')"> + </button>'
+                    tableHead += '<button class="btn bg-brown1" style="border:1px solid black; float: right; padding:5 10px;" onClick="openModal(' + category.category_id + ', true )"> + </button>'
                 }
                 tableHead += '</th></tr>';
                 table.insertAdjacentHTML('beforeend', tableHead);
@@ -161,7 +155,8 @@
                             + '<tr><td>' + item.item_name + '</td>'
                             + '<td>' + priceRounded + ' EUR' + '</td>';
                         if (user_role > 1) {
-                            tableItem += '<td> <button class="btn bg-brown1" style="border:1px solid black" onClick="deleteItem(' + item.item_id + ')"> Delete </button> </td>'
+                            tableItem += '<td> <button class="btn bg-brown1" style="border:1px solid black" onClick="delete_item(' + item.item_id + ')"> Delete </button> </td>'
+                            tableItem += '<td> <button class="btn bg-brown1" style="border:1px solid black" onClick="openModal(' + item.item_id + ', false)"> Edit </button> </td>'
                         }
                         tableItem += '</tr>';
                         table.insertAdjacentHTML('beforeend', tableItem);
@@ -183,7 +178,19 @@
         document.querySelector('.drink-menu').innerHTML = '';
         generateMenus();
 
-        async function deleteItem(item_id) {
+        function add_edit() {
+
+            let isAddItem = document.getElementById("add_item_button").dataset.add_item;
+
+            if (isAddItem === "true") {
+                add_item();
+            } else {
+                edit_item();
+            }
+
+        }
+
+        async function delete_item(item_id) {
 
             console.log(item_id);
 
@@ -215,7 +222,7 @@
 
         async function add_item() {
 
-            let category_id = document.getElementById("add_item_button").dataset.category_id;
+            let category_id = document.getElementById("add_item_button").dataset.id;
             let item_name = document.getElementById("new_item_name").value;
             let item_price = document.getElementById("new_item_price").value;
 
@@ -234,8 +241,28 @@
             location.reload();
         }
 
+        async function edit_item() {
 
-        function openModal(category_id) {
+            let item_id = document.getElementById("add_item_button").dataset.id;
+            let item_name = document.getElementById("new_item_name").value;
+            let item_price = document.getElementById("new_item_price").value;
+
+            let url = "./app/components/item_controller.php?item_id=" + item_id
+                + "&item_name=" + item_name
+                + "&item_price=" + item_price
+                + "&function_name=edit_item";
+
+            await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                }
+            });
+
+            //location.reload();
+        }
+
+        function openModal(id, add_item) {
 
             var modal = document.getElementById("myModal");
 
@@ -243,7 +270,8 @@
             var span = document.getElementsByClassName("close")[0];
 
             let btn = document.getElementById("add_item_button");
-            btn.dataset.category_id = category_id;
+            btn.dataset.id = id;
+            btn.dataset.add_item = add_item;
 
             modal.style.display = "block";
 
