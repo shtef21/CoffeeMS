@@ -20,7 +20,16 @@ crossorigin="anonymous"></script>
     };
 
     // Turn on hot reload
-    function hotReload() {
+    function hotReload(speed) {
+
+        let timeout = 1000;
+
+        if (speed === 'fast') {
+            timeout = 500;
+        }
+        else if (speed === 'slow') {
+            timeout = 2500;
+        }
 
         let prevHtml = null;
         let iid = null;
@@ -34,7 +43,7 @@ crossorigin="anonymous"></script>
             else if (prevHtml !== currHtml) {
                 clearInterval(iid);
                 console.log('%c hotReload: Change detected. Reloading in 1s...', 'color: red;');
-                setTimeout(() => window.location.reload(), 1000);
+                setTimeout(() => window.location.reload(), timeout);
             }
         }, 1000);
     }
