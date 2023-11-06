@@ -16,4 +16,6 @@
     }
     ?>
 
+    <a href="?p=testApi">Test</a>
+
 </div>
