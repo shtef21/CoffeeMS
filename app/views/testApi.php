@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,9 @@
 
     <?php
     require($APP_ROOT . '/components/imports.php')
-    ?>
+        ?>
 </head>
+
 <body class="test">
 
     <?php
@@ -29,16 +31,16 @@
         <form id="addItemForm">
             <label for="category_id">Category ID:</label>
             <input type="text" id="category_id" name="category_id" required><br>
-    
+
             <label for="item_name">Item Name:</label>
             <input type="text" id="item_name" name="item_name" required><br>
-    
+
             <label for="item_price">Item Price:</label>
             <input type="text" id="item_price" name="item_price" required><br>
-    
+
             <button type="button" id="addItemButton">Add Item</button>
         </form>
-    
+
         <div>
             <textarea id="pre_post_items" style="width: 100%; min-height: 150px; resize: vertical;"></textarea>
         </div>
@@ -83,19 +85,20 @@
     <script>
         hotReload('slow');
 
-        getItemsButton.onclick = function() {
+        getItemsButton.onclick = function () {
             // Send a POST request to your API
             fetch('/CoffeeMS/api/items.php')
-            .then(response => response.text())
-            .then(data => {
-                pre_get_items.value = data;
-                // pre_get_items.value = JSON.stringify(data);
-            })
-            .catch(error => {
-                pre_get_items.value = 'Error: ' + error;
-            });
+                .then(response => response.text())
+                .then(data => {
+                    pre_get_items.value = data;
+                    // pre_get_items.value = JSON.stringify(data);
+                })
+                .catch(error => {
+                    pre_get_items.value = 'Error: ' + error;
+                });
         }
-        addItemButton.onclick = function() {
+
+        addItemButton.onclick = function () {
             // Get form data
             const category_id = document.getElementById("category_id").value;
             const item_name = document.getElementById("item_name").value;
@@ -116,28 +119,29 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.text())
-            .then(data => {
-                pre_post_items.value = data;
-            })
-            .catch(error => {
-                pre_post_items.value = 'Error: ' + error;
-            });
+                .then(response => response.text())
+                .then(data => {
+                    pre_post_items.value = data;
+                })
+                .catch(error => {
+                    pre_post_items.value = 'Error: ' + error;
+                });
         };
-        deleteItemButton.onclick = function() {
+
+        deleteItemButton.onclick = function () {
             const item_id = delete_item_id.value;
             fetch('/CoffeeMS/api/items.php?id=' + item_id, {
                 method: 'DELETE'
             })
-            .then(response => response.text())
-            .then(data => {
-                pre_delete_items.value = data;
-            })
-            .catch(error => {
-                pre_delete_items.value = 'Error: ' + error;
-            });
+                .then(response => response.text())
+                .then(data => {
+                    pre_delete_items.value = data;
+                })
+                .catch(error => {
+                    pre_delete_items.value = 'Error: ' + error;
+                });
         }
-        updateItemButton.onclick = function() {
+        updateItemButton.onclick = function () {
             // Get form data
             const item_id = update_item_id.value;
             const category_id = update_category_id.value;
@@ -155,14 +159,15 @@
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.text())
-            .then(data => {
-                pre_update_items.value = data;
-            })
-            .catch(error => {
-                pre_update_items.value = 'Error: ' + error;
-            });
+                .then(response => response.text())
+                .then(data => {
+                    pre_update_items.value = data;
+                })
+                .catch(error => {
+                    pre_update_items.value = 'Error: ' + error;
+                });
         }
     </script>
 </body>
+
 </html>

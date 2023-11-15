@@ -20,11 +20,14 @@
             <span class="close">&times;</span>
         </div>
         <!-- Modal content -->
-        <div class="modal-content">
+        <div class="modal-content" style="width:50%;">
 
-            <input type="text" id="new_item_name" placeholder="Insert item name">
-            <input type="number" id="new_item_price" placeholder="Insert item price">
-            <input type="button" id="add_item_button" value="Add" onClick="add_edit();">
+            <input type="text" id="new_item_name" placeholder="Insert item name"
+                style="margin-bottom:15px; height: 30px;">
+            <input type="number" id="new_item_price" placeholder="Insert item price"
+                style="margin-bottom:15px; height: 30px;">
+            <input type="button" id="add_item_button" value="Add" onClick="add_edit();"
+                style="margin-bottom:15px; height: 30px;">
 
         </div>
 
@@ -120,11 +123,20 @@
 
     <script>
 
-        async function generateMenus() {
+        document.querySelector('.drink-menu').innerHTML = '';
+        on_load();
 
-            let categories = <?php echo json_encode($categories); ?>;
-            let items = <?php echo json_encode($items); ?>;
+        async function on_load() {
+
             let user_role = <?php echo json_encode($_SESSION['role']) ?>;
+            let items = await fetch_items();
+            let categories = await fetch_categories();
+
+            generate_menus(items, categories, user_role);
+
+        }
+
+        function generate_menus(items, categories, user_role) {
 
             let siteNav = document.querySelector('.drink-nav');
             let menuContainer = document.querySelector('.drink-menu');
@@ -175,8 +187,33 @@
             }
         }
 
-        document.querySelector('.drink-menu').innerHTML = '';
-        generateMenus();
+        async function fetch_items() {
+            let items;
+            await fetch('/CoffeeMS/api/items.php')
+                .then(response => response.text())
+                .then(data => {
+                    items = JSON.parse(data);
+                    // pre_get_items.value = JSON.stringify(data);
+                })
+                .catch(error => {
+                    items = 'Error: ' + error;
+                })
+            return items;
+        }
+
+        async function fetch_categories() {
+            let categories;
+            await fetch('/CoffeeMS/api/categories.php')
+                .then(response => response.text())
+                .then(data => {
+                    categories = JSON.parse(data);
+                    // pre_get_items.value = JSON.stringify(data);
+                })
+                .catch(error => {
+                    categories = 'Error: ' + error;
+                })
+            return categories;
+        }
 
         function add_edit() {
 
@@ -192,30 +229,19 @@
 
         async function delete_item(item_id) {
 
-            console.log(item_id);
+            fetch('/CoffeeMS/api/items.php?id=' + item_id, {
+                method: 'DELETE'
+            })
+                .then(response => response.text())
+                .then(data => {
+                    pre_delete_items.value = data;
+                })
+                .catch(error => {
+                    pre_delete_items.value = 'Error: ' + error;
+                });
 
-            let url = "./app/components/item_controller.php?id=" + item_id + "&function_name=delete_item";
-
-            await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                }
-            });
-
-            // await fetch(url, {
-            //     method: "POST", // *GET, POST, PUT, DELETE, etc.
-            //     mode: "cors", // no-cors, *cors, same-origin
-            //     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            //     credentials: "same-origin", // include, *same-origin, omit
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         // 'Content-Type': 'application/x-www-form-urlencoded',
-            //     },
-            //     redirect: "follow", // manual, *follow, error
-            //     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            //     body: { function_name: 'delete_item', id: "item_id" } // body data type must match "Content-Type" header
-            // });
+            //page sometimes reloads before item is deleted without timeout
+            setTimeout(50);
             location.reload();
 
         }
@@ -226,40 +252,58 @@
             let item_name = document.getElementById("new_item_name").value;
             let item_price = document.getElementById("new_item_price").value;
 
-            let url = "./app/components/item_controller.php?category_id=" + category_id
-                + "&item_name=" + item_name
-                + "&item_price=" + item_price
-                + "&function_name=add_item";
+            // Create a JSON object with the data
+            const data = {
+                category_id: category_id,
+                item_name: item_name,
+                item_price: item_price
+            };
 
-            await fetch(url, {
-                method: "GET",
+            // Send a POST request to your API
+            fetch('/CoffeeMS/api/items.php', {
+                method: 'POST',
+                body: JSON.stringify(data),
                 headers: {
-                    "Content-Type": "application/json",
+                    'Content-Type': 'application/json'
                 }
-            });
+            })
+                .then(response => response.text())
+                .then(data => {
+                    pre_post_items.value = data;
+                })
+                .catch(error => {
+                    pre_post_items.value = 'Error: ' + error;
+                });
 
             location.reload();
         }
 
         async function edit_item() {
+            let item;
 
             let item_id = document.getElementById("add_item_button").dataset.id;
             let item_name = document.getElementById("new_item_name").value;
             let item_price = document.getElementById("new_item_price").value;
 
-            let url = "./app/components/item_controller.php?item_id=" + item_id
-                + "&item_name=" + item_name
-                + "&item_price=" + item_price
-                + "&function_name=edit_item";
+            const data = { item_id, item_name, item_price };
 
-            await fetch(url, {
-                method: "GET",
+            // Send a POST request to your API
+            fetch('/CoffeeMS/api/items.php', {
+                method: 'PUT',
+                body: JSON.stringify(data),
                 headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
+                    'Content-Type': 'application/json'
                 }
-            });
+            })
+                .then(response => response.text())
+                .then(data => {
+                    item = data;
+                })
+                .catch(error => {
+                    item = 'Error: ' + error;
+                });
 
-            //location.reload();
+            location.reload();
         }
 
         function openModal(id, add_item) {

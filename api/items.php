@@ -21,8 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $new_id = DB\add_item($category_id, $item_name, $item_price);
     if (is_null($new_id)) {
         echo json_encode(['success' => false]);
-    }
-    else {
+    } else {
         echo json_encode(['success' => true, 'item_id' => $new_id]);
     }
 } elseif ($_SERVER['REQUEST_METHOD'] === 'PUT') {
@@ -31,13 +30,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     // Validate and sanitize input data
     $item_id = filter_var($data['item_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
-    $category_id = filter_var($data['category_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
+    #$category_id = filter_var($data['category_id'], FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
     $item_name = trim($data['item_name']);
     $item_price = filter_var($data['item_price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
     // Check if the provided item ID is valid
-    if ($item_id !== null && $category_id !== null && $item_name !== null && $item_price !== null) {
-        $success = DB\update_item($item_id, $category_id, $item_name, $item_price);
+    if ($item_id !== null && $item_name !== null && $item_price !== null) {
+        $success = DB\update_item($item_id, $item_name, $item_price);
         if ($success) {
             echo json_encode(['success' => true]);
         } else {
@@ -54,8 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $successful_delete = DB\delete_item($id);
         if ($successful_delete) {
             echo json_encode(['success' => true]);
-        }
-        else {
+        } else {
             echo json_encode(['success' => false]);
         }
     } else {
