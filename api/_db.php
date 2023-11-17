@@ -23,6 +23,22 @@ function get_connection()
     return $mysqli;
 }
 
+function initialize_database()
+{
+    $mysqli = get_connection();
+
+    // Drop the database if it exists
+    $drop_db_query = "DROP DATABASE IF EXISTS `coffeems`;";
+    $mysqli->query($drop_db_query);
+
+    // Execute the coffeems.sql script to recreate the database and its structure
+    $coffeems_sql = file_get_contents("../coffeems.sql");
+    $mysqli->multi_query($coffeems_sql);
+
+    // Close the connection
+    $mysqli->close();
+}
+
 function get_items()
 {
     $mysqli = get_connection();
@@ -154,4 +170,41 @@ function get_categories()
 
     $stmt->close();
     return $items;
+}
+
+function get_site_info()
+{
+    $mysqli = get_connection();
+    $query = "SELECT * FROM `site_info`";
+    $result = $mysqli->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row; // Return the site info data
+    } else {
+        return null; // Return null if no data found
+    }
+}
+
+// Get a user by its UUID; used for authorization
+function get_user_by_uuid($uuid)
+{
+    $msqli = get_connection();
+    $sql = "SELECT * FROM users where token = ?";
+
+    // Get user
+    $stmt = $msqli->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("s", $uuid);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            return $user;
+        }
+    }
+
+    // Not found or error
+    return null;
 }

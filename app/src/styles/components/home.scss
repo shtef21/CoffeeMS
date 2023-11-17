@@ -1,3 +1,5 @@
+$table_xpadd: 10px;
+
 .home {
 
     .drink-menu {
@@ -8,23 +10,38 @@
             border-collapse: collapse;
             width: 80%;
             margin: 0 auto 50px;
-        }
 
-        table:first-child {
-            margin-top: 50px;
-        }
+            &:first-child {
+                margin-top: 50px;
+            }
+    
+            & th {
+                background-color: #f2f2f2;
+                padding: 15px $table_xpadd !important;
+                position: relative;
+            }
+    
+            & tr>* {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+    
+            & td:nth-child(1) {
+                width: 50%;
+            }
+    
+            & td:not(:nth-child(1)) {
+                text-align: right;
+            }
 
-        table th {
-            background-color: #f2f2f2;
-        }
-
-        table tr>* {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        td:nth-child(1) {
-            width: 80%;
+            & .add-item-button {
+                border: 1px solid black;
+                padding: 5px 10px;
+                position: absolute;
+                top: 50%;
+                right: $table_xpadd;
+                transform: translateY(-50%);
+            }
         }
     }
 

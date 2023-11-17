@@ -14,6 +14,10 @@ crossorigin="anonymous"></script>
 <script>
     <?php
         // Expose some variables to frontend
+        
+        if (isset($_SESSION["token"])) {
+            echo 'var CMS_TOKEN = "' . $_SESSION["token"] . '";';
+        }
     ?>
     var ENDPOINTS = {
         "drink_menu": "<?php echo $ENDPOINTS['drink_menu'] ?>"

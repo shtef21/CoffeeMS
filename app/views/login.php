@@ -68,6 +68,7 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
                     // Password is correct; set session data
                     $_SESSION['username'] = $data[0]['username'];
                     $_SESSION['role'] = $data[0]['role'];
+                    $_SESSION['token'] = $data[0]['token'];
                     echo "Session variables are set.";
                     echo "session " . $_SESSION['username'] . " " . $_SESSION['role'];
 
@@ -100,7 +101,7 @@ if (isset($_POST['username']) && !empty($_POST['password'])) {
             <form class="cms-form" action="?p=login" method="post">
                 <div class="input-section">
                     <label for="username">Username</label>
-                    <input type="text" name="username" placeholder="Your username...">
+                    <input type="text" name="username" placeholder="Your username..." autofocus>
                 </div>
 
                 <div class="input-section mb30px">

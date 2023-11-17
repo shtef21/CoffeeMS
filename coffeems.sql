@@ -97,6 +97,20 @@ INSERT INTO `items` (`item_id`, `category_id`, `item_name`, `item_price`) VALUES
 
 -- --------------------------------------------------------
 
+-- Table structure for table `site_info`
+CREATE TABLE `site_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `about_us` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table `site_info`
+INSERT INTO `site_info` (`about_us`) VALUES
+('<h2>Meet Our Quirky Team</h2><p>Introduce the unique and diverse personalities that make up your team. Share fun anecdotes and interesting facts about each team member to create a personal connection with your readers.</p><p>Begin by setting the stage for your readers, explaining that they''re about to embark on a journey through your team''s exciting adventures.</p><p>Share the enthusiasm and light-hearted spirit that defines your team''s adventures. Explain that your escapades are not only thrilling but also full of joy and laughter.</p><p>Let readers know that they''ll get to read about travel stories, memorable experiences, and perhaps some humorous mishaps that truly reflect your team''s spirit and camaraderie.</p><h2>Our Fun Adventures</h2><p>Chronicle the exciting and light-hearted adventures your team embarks on. Share travel stories, escapades, and memorable experiences that reflect the spirit of your group.</p><p>Give your readers a sense of anticipation, explaining that they''ll get an exclusive behind-the-scenes look at your blog or business.</p><p>Describe the playful and candid approach you''ll take in sharing the nitty-gritty details, emphasizing that this is where the magic happens.</p><p>Let readers know that they''ll gain insights into the day-to-day activities, the challenges your team faces, and the sweet victories that make it all worthwhile.</p><h2>Behind the Scenes</h2><p>Offer a peek behind the curtain. Share the day-to-day activities, challenges, and victories that go into running your blog or business, all with a playful and candid approach.</p><p>Extend a warm welcome to your readers and let them know that they are invited to join in on the fun.</p><p>Describe the engaging activities and events that are part of your community, emphasizing that it''s not just a blog but a lively, interactive space.</p><p>Share the details about the contests, interactive activities, and ways readers can actively participate and enjoy your blog even more.</p><h2>Join the Fun: Community and Contests</h2><p>Invite readers to become part of your fun community. Share information about contests, interactive activities, or ways for readers to get involved and have fun with your blog.</p>'
+);
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `users`
 --
@@ -106,7 +120,8 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` int(11) NOT NULL
+  `role` int(11) NOT NULL,
+  `token` char(36) NOT NULL DEFAULT UUID()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

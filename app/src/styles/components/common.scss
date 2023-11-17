@@ -53,7 +53,7 @@ body {
   background: linear-gradient($brown3, $brown4);
   display: flex;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   a {
     display: block;

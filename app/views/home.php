@@ -8,7 +8,7 @@
 
     <?php
     require($APP_ROOT . '/components/imports.php')
-        ?>
+    ?>
 </head>
 
 <body class="home">
@@ -19,16 +19,20 @@
         <div class="modal-header">
             <span class="close">&times;</span>
         </div>
+
         <!-- Modal content -->
         <div class="modal-content" style="width:50%;">
-
-            <input type="text" id="new_item_name" placeholder="Insert item name"
-                style="margin-bottom:15px; height: 30px;">
-            <input type="number" id="new_item_price" placeholder="Insert item price"
-                style="margin-bottom:15px; height: 30px;">
-            <input type="button" id="add_item_button" value="Add" onClick="add_edit();"
-                style="margin-bottom:15px; height: 30px;">
-
+            <form>
+                <div class="form-group">
+                    <label for="new_item_name" class="mb-1">Item Name</label>
+                    <input type="text" class="form-control mb-3" id="new_item_name" placeholder="Insert item name">
+                </div>
+                <div class="form-group">
+                    <label for="new_item_price" class="mb-1">Item Price</label>
+                    <input type="number" class="form-control mb-3" id="new_item_price" placeholder="Insert item price">
+                </div>
+                <button type="button" class="btn btn-primary" id="add_item_button" onclick="add_edit()">Add</button>
+            </form>
         </div>
 
     </div>
@@ -108,11 +112,9 @@
             while ($row = $result->fetch_assoc()) {
                 $categories[] = $row;
             }
-
         } else {
             echo "No results found.";
         }
-
     }
 
     $stmt->close();
@@ -122,7 +124,6 @@
     ?>
 
     <script>
-
         document.querySelector('.drink-menu').innerHTML = '';
         on_load();
 
@@ -134,6 +135,11 @@
 
             generate_menus(items, categories, user_role);
 
+        }
+
+        // Log result of a fetch response as string
+        async function log_response(res) {
+            console.log(await res.text());
         }
 
         function generate_menus(items, categories, user_role) {
@@ -149,13 +155,13 @@
                 let table = document.createElement('table');
                 table.id = category.category_id;
 
-                let tableHead = ''
-                    + '<tr><th colspan="'
-                    + (user_role > 1 ? 4 : 2) + '">'
-                    + '<i class="' + category.category_icon + '"></i> '
-                    + category.category_name;
+                let tableHead = '' +
+                    '<tr><th colspan="' +
+                    (user_role > 1 ? 4 : 2) + '">' +
+                    '<i class="' + category.category_icon + '"></i> ' +
+                    category.category_name;
                 if (user_role > 1) {
-                    tableHead += '<button class="btn bg-brown1" style="border:1px solid black; float: right; padding:5 10px;" onClick="openModal(' + category.category_id + ', true )"> + </button>'
+                    tableHead += '<button class="btn bg-brown1 add-item-button" onClick="openModal(' + category.category_id + ', true )"> + </button>'
                 }
                 tableHead += '</th></tr>';
                 table.insertAdjacentHTML('beforeend', tableHead);
@@ -163,9 +169,9 @@
                 for (let item of items) {
                     if (item.category_id === category.category_id) {
                         let priceRounded = Number(item.item_price).toFixed(2);
-                        let tableItem = ''
-                            + '<tr><td>' + item.item_name + '</td>'
-                            + '<td>' + priceRounded + ' EUR' + '</td>';
+                        let tableItem = '' +
+                            '<tr><td>' + item.item_name + '</td>' +
+                            '<td>' + priceRounded + ' EUR' + '</td>';
                         if (user_role > 1) {
                             tableItem += '<td> <button class="btn bg-brown1" style="border:1px solid black" onClick="delete_item(' + item.item_id + ')"> Delete </button> </td>'
                             tableItem += '<td> <button class="btn bg-brown1" style="border:1px solid black" onClick="openModal(' + item.item_id + ', false)"> Edit </button> </td>'
@@ -229,21 +235,24 @@
 
         async function delete_item(item_id) {
 
-            fetch('/CoffeeMS/api/items.php?id=' + item_id, {
-                method: 'DELETE'
-            })
-                .then(response => response.text())
-                .then(data => {
-                    pre_delete_items.value = data;
+            await fetch('/CoffeeMS/api/items.php?id=' + item_id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${CMS_TOKEN}`,
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                    else {
+                        console.log('API did not return HTTP OK');
+                        log_response(response);
+                    }
                 })
                 .catch(error => {
-                    pre_delete_items.value = 'Error: ' + error;
+                    console.log('Error:', error);
                 });
-
-            //page sometimes reloads before item is deleted without timeout
-            setTimeout(50);
-            location.reload();
-
         }
 
         async function add_item() {
@@ -261,49 +270,59 @@
 
             // Send a POST request to your API
             fetch('/CoffeeMS/api/items.php', {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.text())
-                .then(data => {
-                    pre_post_items.value = data;
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CMS_TOKEN}`,
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                    else {
+                        console.log('API did not return HTTP OK');
+                        log_response(response);
+                    }
                 })
                 .catch(error => {
-                    pre_post_items.value = 'Error: ' + error;
+                    console.log('Error:', error);
                 });
-
-            location.reload();
         }
 
         async function edit_item() {
-            let item;
-
             let item_id = document.getElementById("add_item_button").dataset.id;
             let item_name = document.getElementById("new_item_name").value;
             let item_price = document.getElementById("new_item_price").value;
 
-            const data = { item_id, item_name, item_price };
+            const data = {
+                item_id,
+                item_name,
+                item_price
+            };
 
-            // Send a POST request to your API
+            // Send a PUT request to your API
             fetch('/CoffeeMS/api/items.php', {
-                method: 'PUT',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.text())
-                .then(data => {
-                    item = data;
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${CMS_TOKEN}`,
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                    else {
+                        console.log('API did not return HTTP OK');
+                        log_response(response);
+                    }
                 })
                 .catch(error => {
-                    item = 'Error: ' + error;
+                    console.log('Error:', error);
                 });
-
-            location.reload();
         }
 
         function openModal(id, add_item) {
@@ -320,18 +339,17 @@
             modal.style.display = "block";
 
             // When the user clicks on <span> (x), close the modal
-            span.onclick = function () {
+            span.onclick = function() {
                 modal.style.display = "none";
             }
 
             // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
+            window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
                 }
             }
         }
-
     </script>
 
 </body>

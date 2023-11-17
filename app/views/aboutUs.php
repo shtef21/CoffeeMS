@@ -57,9 +57,9 @@
         async function fetchBlog() {
 
             let blogContainer = document.querySelector('.about-us-dest');
-            let data = await fetch('/coffeems/app/src/data/aboutUs.json')
+            let data = await fetch('/CoffeeMS/api/site_info.php')
                 .then((res) => res.json());
-            blogContainer.innerHTML = data.aboutUs || '<h2>Blog not found</h2>';
+            blogContainer.innerHTML = data.about_us || '<h2>Blog not found</h2>';
 
             generateNav();
         }

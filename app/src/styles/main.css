@@ -72,7 +72,7 @@ body {
   background: linear-gradient(#b99976, #987554);
   display: flex;
   justify-content: flex-start;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .site-nav a {
   display: block;
@@ -144,13 +144,26 @@ form.cms-form .form-footer a {
 }
 .home .drink-menu table th {
   background-color: #f2f2f2;
+  padding: 15px 10px !important;
+  position: relative;
 }
 .home .drink-menu table tr > * {
   border: 1px solid #ddd;
   padding: 8px;
 }
-.home .drink-menu td:nth-child(1) {
-  width: 80%;
+.home .drink-menu table td:nth-child(1) {
+  width: 50%;
+}
+.home .drink-menu table td:not(:nth-child(1)) {
+  text-align: right;
+}
+.home .drink-menu table .add-item-button {
+  border: 1px solid black;
+  padding: 5px 10px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
 }
 .home .modal {
   display: none;
