@@ -4,10 +4,7 @@ Php app
 
 ## TODO
 
-- Move About us to DB
-- Implement tokens (on home.php and testApi.php)
-- Use Bootstrap forms on home.php - https://getbootstrap.com/docs/4.0/components/forms/
-- Document important functions
+- Add comments where needed
 
 
 ## Init docker
