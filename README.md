@@ -2,7 +2,6 @@
 
 A simple coffee shop CMS.
 
-Once you start the XAMPP server, you should:
 
 ## Run it on your machine
 
