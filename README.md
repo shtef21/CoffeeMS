@@ -1,49 +1,30 @@
 # CoffeeMS
 
-Php app
+A simple coffee shop CMS.
+
+Made with XAMPP - PHP version 8.2.4
+
+Once you start the XAMPP server, you should:
+
+```sh
+# Navigate to XAMPP's htdocs (adjust for your machine):
+cd C:/xampp/htdocs
+
+# Clone the project into it
+git clone https://github.com/shtef21/CoffeeMS
+
+# Initialize the database by running coffeems.sql inside phpmyadmin,
+# or by visiting this url:
+#     http://localhost/CoffeeMS/api/initialize_or_reset_db.php
+
+# Your app should be live!
+# Check it out by visiting http://localhost/CoffeeMS
+```
 
 ## TODO
 
 - Add comments where needed
-
-
-## Init docker
-
-```sh
-# Build image
-docker build -t cms-img .
-
-# Run container in background and expose port 5000 to host's 5000
-docker run -dp 5000:5000 cms-img
-
-# List docker containers
-docker ps
-```
-
-## Zadaci
-
-### Zadatak 1 - Init, routing
-
-Naslovna stranica i routing na ostale (ostale ne moraju nužno biti napravljene)
-
-https://lms-2020.tvz.hr/mod/resource/view.php?id=5957
-
-### Zadatak 2 - Baza podataka
-
-Izrada baze podataka na temelju definicije podataka.
-
-### Zadatak 3 - Prijava i registracija
-
-? Omogućiti automatsko generiranje usernamea i passworda?
-
-+ Kriptiranje lozinke
-
-### Zadatak 4 - CMS sustav
-
-CRUD korisnika - ADMIN
-CRUD pića - ADMIN, EDITOR
-API pretraživanje koktela - ADMIN, EDITOR
-
+- Update README with latest screenshots
 
 ## Upute
 
@@ -80,6 +61,7 @@ sudo ./manager-linux-run (or manager-linux-64.run)
 
 #### Login
 <img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
+
 
 #### Register
 <img src="git-images/register-page.png" alt="Register page" width="400"/>
