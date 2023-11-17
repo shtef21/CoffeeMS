@@ -7,7 +7,7 @@ A simple coffee shop CMS.
 
 You can check the app for yourself in 3 steps
 
-### 1. Install XAMPP (PHP 8.2.4):
+### 1. Install XAMPP (PHP 8.2.4) and start Apache & MySQL:
 
 https://www.apachefriends.org/download.html
 
