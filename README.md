@@ -2,33 +2,41 @@
 
 A simple coffee shop CMS.
 
-Made with XAMPP - PHP version 8.2.4
-
 Once you start the XAMPP server, you should:
 
+## Run it on your machine
+
+You can check the app for yourself in 3 steps
+
+### 1. Install XAMPP (PHP 8.2.4):
+
+https://www.apachefriends.org/download.html
+
+### 2. Clone the repo in XAMPP htdocs
+
+`htdocs` is a folder in which XAMPP stores its web pages.
+
 ```sh
-# Navigate to XAMPP's htdocs (adjust for your machine):
+# htdocs path may be different for your machine
 cd C:/xampp/htdocs
 
-# Clone the project into it
 git clone https://github.com/shtef21/CoffeeMS
-
-# Initialize the database by running coffeems.sql inside phpmyadmin,
-# or by visiting this url:
-#     http://localhost/CoffeeMS/api/initialize_or_reset_db.php
-
-# Your app should be live!
-# Check it out by visiting http://localhost/CoffeeMS
 ```
+
+### 3. Initialize the database
+
+- Either by running `coffeems.sql` as a query in http://localhost/phpmyadmin
+- Or by visiting http://localhost/CoffeeMS/api/initialize_or_reset_db.php
+
+### Your app should be live!
+Check it out by visiting http://localhost/CoffeeMS
 
 ## TODO
 
 - Add comments where needed
 - Update README with latest screenshots
 
-## Upute
-
-Instalacija XAMPPa na linuxu
+## Install XAMPP on linux
 
 ```shell
 
