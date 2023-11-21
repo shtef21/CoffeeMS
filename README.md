@@ -30,10 +30,25 @@ git clone https://github.com/shtef21/CoffeeMS
 ### Your app should be live!
 Check it out by visiting http://localhost/CoffeeMS
 
-## TODO
 
-- Add comments where needed
-- Update README with latest screenshots
+
+
+## Design
+
+#### Home page
+<img src="git-images/home-page.png" alt="Home page" width="400"/>
+
+#### Login page
+<img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
+
+#### About us
+<img src="git-images/about-us-page.png" alt="About us" width="400"/>
+
+#### Cocktail finder
+<img src="git-images/cocktail-finder.png" alt="About us" width="400"/>
+
+
+
 
 ## Install XAMPP on linux
 
@@ -60,18 +75,3 @@ cd /opt/lampp
 sudo ./manager-linux-run (or manager-linux-64.run)
 
 ```
-
-## Design
-
-#### Home page
-<img src="git-images/home-page.png" alt="Home page" width="400"/>
-
-#### Login
-<img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
-
-
-#### Register
-<img src="git-images/register-page.png" alt="Register page" width="400"/>
-
-#### About us
-<img src="git-images/about-us-page.png" alt="About us" width="400"/>
