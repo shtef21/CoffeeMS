@@ -5,6 +5,25 @@ A simple content-management system web application made for small cafes.
 Presentation: [Canva](https://www.canva.com/design/DAF0tjdzbsg/VDE9lqKu9bKDlSqtudCqzg/view?utm_content=DAF0tjdzbsg&utm_campaign=designshare&utm_medium=link&utm_source=editor)
 
 
+
+
+## Design
+
+#### Home page
+<img src="git-images/home-page.png" alt="Home page" width="400"/>
+
+#### Login page
+<img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
+
+#### About us
+<img src="git-images/about-us-page.png" alt="About us" width="400"/>
+
+#### Cocktail finder
+<img src="git-images/cocktail-finder.png" alt="About us" width="400"/>
+
+
+
+
 ## Run it on your machine
 
 You can check the app for yourself in 3 steps
@@ -31,21 +50,4 @@ git clone https://github.com/shtef21/CoffeeMS
 
 ### Your app should be live!
 Check it out by visiting http://localhost/CoffeeMS
-
-
-
-
-## Design
-
-#### Home page
-<img src="git-images/home-page.png" alt="Home page" width="400"/>
-
-#### Login page
-<img src="git-images/login-page.png" alt="git-images/login-page.png" width="400"/>
-
-#### About us
-<img src="git-images/about-us-page.png" alt="About us" width="400"/>
-
-#### Cocktail finder
-<img src="git-images/cocktail-finder.png" alt="About us" width="400"/>
 
