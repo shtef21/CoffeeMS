@@ -54,10 +54,6 @@
     <?php
     include($APP_ROOT . '/components/footer.php');
 
-    if (isset($_POST["functionName"])) {
-        echo "IMA GA " . $_POST["functionName"];
-    }
-
     // Database configuration
     $server_name = 'localhost';
     $username = 'root';
