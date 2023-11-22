@@ -45,9 +45,11 @@ git clone https://github.com/shtef21/CoffeeMS
 
 ### 3. Initialize the database
 
-- Either by running `coffeems.sql` as a query in http://localhost/phpmyadmin
-- Or by visiting http://localhost/CoffeeMS/api/initialize_or_reset_db.php
+- Run `coffeems.sql` as a query in http://localhost/phpmyadmin
 
 ### Your app should be live!
 Check it out by visiting http://localhost/CoffeeMS
+
+You can login with superuser **admin/admin** and **user/user** (username/password).
+
 
